@@ -8,6 +8,12 @@ import 'antd/dist/antd.css';
 import UserProfile from '../components/UserProfile';
 import LoginForm from '../components/LoginForm';
 import { useState, useCallback } from 'react';
+import styled from 'styled-components';
+
+// 앤트디자인의 컴포넌트 스타일 커스텀하기
+const SearchInput = styled(Input.Search)`
+    vertical-align: 'middle'
+`;
 
 const AppLayout = ({ children }) => {
     // 로그인을 위한 더미데이터
@@ -24,7 +30,7 @@ const AppLayout = ({ children }) => {
                 </Menu.Item>
                 <Menu.Item>
                 {/* 검색창 */}
-                    <Input.Search enterButton style={{ verticalAlign: 'middle' }}/>
+                    <SearchInput enterButton/>
                 </Menu.Item>
                 <Menu.Item>
                     <Link href="/signup"><a>회원가입</a></Link>
@@ -35,7 +41,8 @@ const AppLayout = ({ children }) => {
             <Row gutter={8}>
                 {/* 모바일 버전 세로 24개의 column이 있을때 데스크탑버전에선 6/24만 차지한다 */}
                 <Col xs={24} md={6}>
-                    {isLoggedIn? <UserProfile /> : <LoginForm/>}
+                    {isLoggedIn? <UserProfile setIsLoggedIn={setIsLoggedIn} /> : <LoginForm setIsLoggedIn={setIsLoggedIn}/>}
+                    {/* LoginForm에서 setIsLoggedIn가 true로 바뀌는 순간(로그인하는 순간) isLoggedIn이 true로 바뀜 */}
                 </Col>
                 <Col xs={24} md={12}>
                     {children}
